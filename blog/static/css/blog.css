@@ -78,3 +78,23 @@ h4 {
     color: #FFFFFF;
     background-color: #C25100;
 }
+
+.step-links a{
+    color:black;
+    font-weight: bold;
+    text-decoration:none;
+    /* font-family: 'Lobster'; */
+}
+
+.step-links{
+    position: fixed;
+    bottom: 0;
+    left:15px;
+    /* text-align: center; */
+    width:100%;
+    
+    
+}
+.current{
+    font-weight: bold;
+}

@@ -2,14 +2,26 @@ from django.shortcuts import render,get_object_or_404,redirect
 from .models import Post
 from django.utils import timezone
 from .forms import PostForm
+from django.core.paginator import Paginator
 
 # Create your views here.
 
 
-def post_list(request):
-    posts = Post.objects.filter(published_date__lte = timezone.now())
+# def post_list(request):
+#     posts = Post.objects.filter(published_date__lte = timezone.now())
 
-    return render(request, 'blog/post_list.html', {'posts':posts})
+#     return render(request, 'blog/post_list.html', {'posts':posts})
+
+
+def post_list(request):
+    posts = Post.objects.filter(published_date__lte = timezone.now()).order_by('-published_date')
+    p = Paginator(posts,3)
+
+    page_number = request.GET.get('page') #1
+    page_obj = p.get_page(page_number)  # <Page 1 of 2>
+    
+    return render(request,'blog/post_list.html',{'page_obj':page_obj})
+
 
 def post_detail(request , pk):
     post = get_object_or_404(Post,pk=pk)
@@ -45,3 +57,17 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+
+# def post_draft_list(request):
+#     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+#     return render(request , 'blog/post_draft_list.html',{'posts':posts})
+
+def post_draft_list(request):
+    posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+    p= Paginator(posts,3)
+
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    
+    return render(request , 'blog/post_draft_list.html',{'page_obj':page_obj})
