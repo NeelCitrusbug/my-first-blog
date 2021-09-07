@@ -14,7 +14,6 @@
 </head>
 
 <body>
-
     <header class="page-header">
         <div class="contanier">
             {% if user.is_authenticated %}
@@ -22,7 +21,15 @@
                 {% include './icons/file-earmark-plus.svg' %}
             </a>
 
-            <a href="{% url 'post_draft_list' %}" class="top-menu">
+            <a href="{% url 'category_new' %}" class="top-menu" style="text-decoration: none;">
+                Add Category
+            </a>
+
+            <a href="{% url 'category_list' %}" class="top-menu" style="text-decoration: none;">
+                View Categories
+            </a>
+
+            <a href="{% url 'post_draft_list' %}" class="top-menu" style="text-decoration: none;">
                 <span class="glyphicon glyphicon-edit">drafts</span>
             </a>
             {% endif %}
